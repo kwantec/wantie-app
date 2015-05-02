@@ -15,3 +15,6 @@ Parse.Cloud.define("provides", providesApi.provides );
 Parse.Cloud.define("settings", settingsApi.settings );
 
 Parse.Cloud.define("categories", categoriessApi.categories );
+
+// commented to prevent calling (uncomment to use and the re-comment)
+//Parse.Cloud.define("initcat", categoriessApi.init );
