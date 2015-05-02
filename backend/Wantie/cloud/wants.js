@@ -7,18 +7,13 @@ exports.wantsMatch = function(request, response) {
 	
 	var theCity = request.params.city;//mywant.city;
 	var theCategory = request.params.category;//mywant.category;
-	console.log("Querying for city:" + theCity);
-	console.log("Querying for category:" + theCategory);
-
 
 	var Provide = Parse.Object.extend("Provide");
 	var query = new Parse.Query(Provide);
 
 	//query.equalTo("user")
 	
-	//query.equalTo( "city",  theCity);
-	
-	
+	query.equalTo( "city",  theCity);
 	query.equalTo( "category",  theCategory);
 	query.descending("updatedAt");
 
