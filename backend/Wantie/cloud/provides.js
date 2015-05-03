@@ -50,6 +50,12 @@ exports.provides = function(request, response) {
 					  promise.then(
 						  function(){
 							  console.log("EXECUTED PROVIDES PROMISE: ");
+							  
+							  retUsers.sort( function(a, b){
+								  
+								  return a.category.localeCompare(b.category);
+							  });
+							  
 						  	  response.success(retUsers);
 						  }
 					  );
