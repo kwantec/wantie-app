@@ -129,33 +129,3 @@ exports.provides = function(request, response) {
    
 };
 
-exports.providesold = function(request, response) {
-  
-	var currentUser = Parse.User.current();
-	if (currentUser) {
-		
-		if (currentUser.authenticated())
-		{
-			var Provide = Parse.Object.extend("Provide");
-			var query = new Parse.Query(Provide);
-			query.equalTo("myuser", currentUser );
-			query.find({
-			      success: function(usersProvides) {
-			        // usersProvides contains all of the wants by the current user.
-					  //console.log(userProvides);
-					  response.success(usersProvides);
-			      }
-			    });
-			
-		}else{
-			
-			response.error('User Not authenticated');
-		}
-		
-	    
-	} else {
-	    // show the signup or login page
-		response.error('No user or Not authenticated');
-	}
-   
-};
