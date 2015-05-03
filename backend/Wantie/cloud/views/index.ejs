@@ -10,6 +10,11 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-theme.min.css">
 
+<!--
+<script src="/lib/react/react.min.js"></script>
+<script src="/lib/react/JSXTransformer.js"></script>
+-->
+
 </head>
 <body ng-app="myApp">
 <script>
@@ -23,15 +28,26 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+      
+	  angular.element(document.getElementById('tabsControllerId')).scope().loggedIn();
+	  
+	  testAPI();
+	  
+	  
+	  
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
 		//document.getElementById('status').innerHTML = 'Please log into this app.';
+		angular.element(document.getElementById('tabsControllerId')).scope().loggedOut();
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
 		//document.getElementById('status').innerHTML = 'Please log into Facebook.';
+		angular.element(document.getElementById('tabsControllerId')).scope().loggedOut();
     }
+	
+	angular.element(document.getElementById('tabsControllerId')).scope().$apply();
+	
   }
 
   // This function is called when someone finishes with the Login
@@ -85,6 +101,7 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
+	  console.log(response);
       //document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
     });
   }
@@ -107,29 +124,76 @@
 </nav>
 
 
-<div class="row" ng-controller="tabsController">
+<div class="row" ng-controller="tabsController" id="tabsControllerId">
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<tabset>
-			<tab heading="Needs">
+			<tab heading="Needs" select="selectedNeed()" data-ng-if="isloggedIn" >
 				<div class="panel panel-default">
 				  <div class="panel-body">
-				    Needs go here
+					  <table class="table table-hover table-bordered table-condensed table-striped" >
+						  <tr>
+						  	<th>Category</th>
+							<th>City</th>
+							<th>Matches</th>
+						 </tr>
+						  <tr ng-repeat="w in wants">
+					    	  <td>{{w.category}}</td>
+							  <td>{{w.city}}</td>
+							  <td>{{w.matches}}</td>
+						</tr>
+					  </table>
+<!--				    
+					<div id="example"></div>
+					<script type="text/jsx" src="/dist/index.jsx"></script>
+-->					
 				  </div>
 				</div>
 			</tab>
-			<tab heading="Provide">
+			<tab heading="Provide" select="selectedProvide()" data-ng-if="isloggedIn">
+					  
 				<div class="panel panel-default">
-				  <div class="panel-body">
-				    Provide goes here
-				  </div>
+				  <div class="panel-body">	  
+					  <table class="table table-hover table-bordered table-condensed table-striped" >
+						  <tr>
+						  	<th>Category</th>
+							<th>City</th>
+							<th>Matches</th>
+						 </tr>
+						  <tr ng-repeat="p in provides">
+					    	  <td>{{p.category}}</td>
+							  <td>{{p.city}}</td>
+							  <td>{{p.matches}}</td>
+						</tr>
+					  </table>
+				</div>	
 				</div>
-
 			</tab>
-			<tab heading="Settings">
+			<tab heading="Settings" select="selectedSettings()" data-ng-if="isloggedIn">
 				<div class="panel panel-default">
 				  <div class="panel-body">
-				    Settings go here
+				    
+					  <form>
+						  <div class="form-group">
+							  <label for="screenName">Screen name:</label>
+							  <input type="text" class="form-control" id="screenName" placeholder="Enter a screen name" ng-model="settings.screenName">
+						  </div>
+						  <div class="form-group">
+							  <label for="email">Email:</label>
+							  <input type="email" class="form-control" id="email" placeholder="Email" ng-model="settings.email">
+						  </div>
+						  <div class="form-group">
+							  <label for="phone">Phone:</label>
+							  <input type="text" class="form-control" id="phone" placeholder="phone number" ng-model="settings.phone">
+						  </div>
+						  <div class="form-group">
+							  <label for="city">City:</label>
+							  <input type="city" class="form-control" id="city" placeholder="city" ng-model="settings.city">
+						  </div>
+						  
+						  <button type="submit" class="btn btn-default">Save</button>
+					  </form>					
+					
 				  </div>
 				</div>
 				
@@ -161,6 +225,7 @@
 <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/lib/angular/angular.min.js"></script>
 <script src="/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
 <script src="/dist/index.js"></script>
 
 
