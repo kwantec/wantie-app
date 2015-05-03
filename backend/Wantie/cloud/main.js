@@ -12,9 +12,11 @@ var categoriessApi = require('cloud/categories.js');
 
 Parse.Cloud.define("wants", wantsApi.wants);
 Parse.Cloud.define("wantsMatch", wantsApi.wantsMatch);
+Parse.Cloud.define("wantsd", wantsApi.wantsd);
 
 Parse.Cloud.define("provides", providesApi.provides );
 Parse.Cloud.define("providesMatch", providesApi.providesMatch );
+Parse.Cloud.define("providesd", providesApi.providesd );
 
 Parse.Cloud.define("settings", settingsApi.settings );
 
