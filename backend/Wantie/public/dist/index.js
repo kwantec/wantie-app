@@ -33,9 +33,9 @@ app.controller('tabsController', function($scope, $window, $http) {
 		];
 
 	$scope.settings = {
-		screenName: '',
-		phone: '',
-		email: '',
+		screenName: 'tubrody',
+		phone: '6503532299',
+		email: 'daniel@kwantec.com',
 		city: 'Miami'
 	};
 
