@@ -89,24 +89,16 @@ exports.wants = function(request, response) {
 		
 		if (currentUser.authenticated())
 		{
-			var wantsList = [
-				{
-					category: 'Plumber',
-					city: 'Miami',
-					state: 'Florida',
-					country: 'USA',
-					description: 'I have a bad tooth'
-				},
-				{
-					category: 'Dentist',
-					city: 'Miami',
-					state: 'Florida',
-					country: 'USA',
-					description: ''
-				},
-			];
-
-			response.success( wantsList );
+			var Want = Parse.Object.extend("Want");
+			var query = new Parse.Query(Want);
+			query.equalTo("myuser", currentUser );
+			query.find({
+			      success: function(usersWants) {
+			        // usersWants contains all of the wants by the current user.
+					  //console.log(userWants);
+					  response.success(usersWants);
+			      }
+			    });
 			
 		}else{
 			
